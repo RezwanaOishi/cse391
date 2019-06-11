@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+/* -------------------------- style for part 1.1 ---------------------------- */
+		#quote_box { border: 4px solid black }
+		.color_button { height: 20px ; width: 40px }
+		#button_1 { border-color: maroon  ; background-color: gray   }
+		#button_2 { border-color: green   ; background-color: yellow }
+		#button_3 { border-color: blue ; background-color: cyan  }
+		#button_4 { border-color: maroon ; background-color: pink  }
+/* -------------------------- style for part 1.1 ---------------------------- */
+
+/* --------------------------- style for part 3 ------------------------------ */
+	textarea { height: 200px ; width: 100% }
+/* -------------------------------------------------------------------------- */
+	</style>
+</head>
+
+
+
+
+
+
+
+
+
+
+<body>
+
+
+	<div>
+		<h2>Part 1</h2>
+<!-- -------------------------------------- part 1.2 -------------------------------------- -->
+		<h4>Hero converter</h4>
+		<div>
+			Convert
+			<input id="converter_input" type="number" name="">
+			<select>
+				<option value="lb-to-kg">lb to kg</option>
+				<option value="kg-to-lb">kg to lb</option>
+			</select>
+			<button onclick="part_1_2()">Go</button>
+			<span id="converter_result"></span>
+		</div>
+<!-- -------------------------------------------------------------------------------------- -->
+
+<!-- -------------------------------------- part 1.1 -------------------------------------- -->
+		<h4>Quote box</h4>
+		<div id="quote_box"></div>
+		<button id="button_1" class="color_button" onclick="part_1_1('btn1')"></button>
+		<button id="button_2" class="color_button" onclick="part_1_1('btn2')"></button>
+		<button id="button_3" class="color_button" onclick="part_1_1('btn3')"></button>
+		<button id="button_4" class="color_button" onclick="part_1_1('btn4')"></button>
+<!-- -------------------------------------------------------------------------------------- -->
+	</div>
+
+
+	<br><br><br>
+
+
+<!-- -------------------------------------- part 2 ---------------------------------------- -->
+	<div>
+		<h2>Part 2</h2>
+		Series:<input id="series_input" type="text" name="">
+		<br>
+		Max:<span id="max_result"></span>
+		<br>
+		Min:<span id="min_result"></span>
+		<br>
+		Sum:<span id="sum_result"></span>
+		<br>
+		Average:<span id="avg_result"></span>
+		<br>
+		Reverse:<span id="rev_result"></span>
+		<br>
+	</div>
+<!-- -------------------------------------------------------------------------------------- -->
+
+
+	<br><br><br>
+
+
+<!-- -------------------------------------- part 3 ---------------------------------------- -->
+	<div>
+		<h2>Part 3</h2>
+		<textarea id="textbox"></textarea>
+		<button onclick="part_3_clr()">Clear</button>
+		<button onclick="part_3_cap()">Capitalize</button>
+		<button onclick="part_3_sort()">Sort</button>
+		<button onclick="part_3_rev()">Reverse</button>
+		<button onclick="part_3_trim()">Strip blanks</button>
+		<button onclick="part_3_add()">Add numbers</button>
+		<button onclick="part_3_shfl()">Shuffle</button>
+	</div>
+<!-- -------------------------------------------------------------------------------------- -->
+	
+
+
+</body>
+
+
+
+
+
+
+
+
+
+
+<script>
+
+// -------------------------------------- JS for part 1.1 --------------------------------------
+	var quoteList = [
+		"For You, Thousand times over",
+		"Some infinities are greater than other infinities",
+		"look, how they massacre my boy",
+		"When breathe becomes air",
+		"Democracy is by the people,of the people,for the people",
+		"The very motion of our life is towards happiness"
+	];
+
+	// this runs automatically every time page is reloaded
+	window.onload = function() {
+		var index = Math.floor( Math.random()*quoteList.length );
+		document.getElementById("quote_box").innerText = quoteList[index];
+	}
+
+	// this runs when any of the colored button is clicked
+	function part_1_1(whichButton) {
+		if (whichButton=="btn1") {
+			document.getElementById("quote_box").style.borderColor = "maroon";		// match colors with CSS
+			document.getElementById("quote_box").style.backgroundColor = "gray";		// match these colors with CSS
+		} else if (whichButton=="btn2") {
+			document.getElementById("quote_box").style.borderColor = "green";		// match these colors with CSS
+			document.getElementById("quote_box").style.backgroundColor = "yellow";	// match these colors with CSS
+		} else if (whichButton=="btn3") {
+			document.getElementById("quote_box").style.borderColor = "blue";		// match these colors with CSS
+			document.getElementById("quote_box").style.backgroundColor = "cyan";	// match these colors with CSS
+		} else if (whichButton=="btn4") {
+			document.getElementById("quote_box").style.borderColor = "maroon";		// match these colors with CSS
+			document.getElementById("quote_box").style.backgroundColor = "pink";	// match these colors with CSS
+		}
+	}
+// ---------------------------------------------------------------------------------------------
+
+
+
+// -------------------------------------- JS for part 1.2 --------------------------------------
+	function part_1_2() {
+		var input = document.getElementById("converter_input").value;
+		var result, unit;
+		if (document.getElementsByTagName("select")[0].value=="lb-to-kg") {
+			result = input * 0.4536;
+			unit = "kg";
+		} else if (document.getElementsByTagName("select")[0].value=="kg-to-lb") {
+			result = input * 2.2046;
+			unit = "lb";
+		}
+		document.getElementById("converter_result").innerText = result + " " + unit;
+	}
+// ---------------------------------------------------------------------------------------------
+
+
+
+// -------------------------------------- JS for part 2 ----------------------------------------
+	document.getElementById("series_input").oninput = function() {
+		var input = document.getElementById("series_input").value;
+		if (input[input.length-1]==",") {
+			var numbers = input.split(",");					// extract numbers from series string
+			numbers = numbers.slice(0, numbers.length-1);	// discard last value in array since it is empty
+			
+			var max = Math.max.apply(null, numbers);
+			document.getElementById("max_result").innerText = max;
+			
+			var min = Math.min.apply(null, numbers);
+			document.getElementById("min_result").innerText = min;
+			
+			var sum=0;
+			for (var c=0; c<numbers.length; ++c) {
+				sum += parseInt(numbers[c]);
+			}
+			document.getElementById("sum_result").innerText = sum;
+			
+			var avg = sum / numbers.length;
+			document.getElementById("avg_result").innerText = avg;
+			
+			var rev = numbers.reverse().join(",");
+			document.getElementById("rev_result").innerText = rev;
+		}
+	}
+// ---------------------------------------------------------------------------------------------
+
+
+
+// -------------------------------------- JS for part 3 ----------------------------------------
+	function part_3_clr() {
+		document.getElementById("textbox").value = "";
+	}
+
+	function part_3_cap() {
+		document.getElementById("textbox").style.textTransform = "uppercase";
+	}
+
+	function part_3_sort() {
+		var lines = document.getElementById("textbox").value.split("\n");	// get lines by duvung at line breaks
+		var sortedLines = lines.sort();
+		document.getElementById("textbox").value = sortedLines.join("\n");	// put sorted lines back with line breaks
+	}
+
+	function part_3_rev() {
+		var lines = document.getElementById("textbox").value.split("\n");
+		console.log(lines);
+		var revLines = [];
+		for (var c=0; c<lines.length; ++c) {
+			var chars = lines[c].split("");		// make character array from line
+			var revChars = chars.reverse();		// reverse character sequence in each line
+			var revLine = revChars.join("");	// make line from characters again
+			revLines.push(revLine);
+		}
+		document.getElementById("textbox").value = revLines.join("\n");
+	}
+
+	function part_3_trim() {
+		var lines = document.getElementById("textbox").value.split("\n");
+		var trimmedLines = [];
+		for (var c=0; c<lines.length; ++c) {
+			if (lines[c]!="") {						// skip empty lines 
+				trimmedLines.push(lines[c].trim());		// put trimmed lines in new array
+			}
+		}
+		document.getElementById("textbox").value = trimmedLines.join("\n");
+	}
+
+	function part_3_add() {
+		var lines = document.getElementById("textbox").value.split("\n");
+		for (var c=0; c<lines.length; ++c) {
+			lines[c] = "0" + lines[c];		// just add a number before the value and put in array again
+		}
+		document.getElementById("textbox").value = lines.join("\n");
+	}
+// ---------------------------------------------------------------------------------------------
+
+</script>
+
+
+</html>
