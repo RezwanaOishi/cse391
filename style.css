@@ -1,0 +1,20 @@
+table,td,th{
+		border: 5px solid black;
+		}
+		#tbl1{
+		border:5px solid black;
+
+		}
+		.tbl2{
+		border: 5px solid black;
+
+		}
+		h1,blockquote{
+			text-align:center;
+}
+img{
+	height: 300px;width: 250px
+}
+body{
+	background-color: lightblue
+}
